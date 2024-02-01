@@ -23,7 +23,14 @@ export default async function Home() {
     <>
       <AuthButtonServer />
       <NewTweet />
-      <pre>{JSON.stringify(tweets, null, 2)}</pre>
+      {tweets?.map((tweet) => (
+        <div key={tweet.id}>
+          <p>
+            {tweet?.profiles?.name} {tweet?.profiles?.username}
+          </p>
+          <p>{tweet.title}</p>
+        </div>
+      ))}
     </>
   );
 }
