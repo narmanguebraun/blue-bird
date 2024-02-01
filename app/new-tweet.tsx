@@ -7,26 +7,44 @@
  * to enable insert action for authenticated users.
  */
 
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { User, createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
+import Image from "next/image";
 
-export default function NewTweet() {
+export default function NewTweet({ user }: { user: User }) {
   const addTweet = async (formData: FormData) => {
     "use server";
     console.log("submitted");
+
     const title = String(formData.get("title"));
     const supabase = createServerActionClient<Database>({ cookies });
     const {
       data: { user },
     } = await supabase.auth.getUser();
+
     if (user) {
       await supabase.from("tweets").insert({ title, user_id: user.id });
     }
   };
 
   return (
-    <form action={addTweet}>
-      <input name="title" className="bg-inherit" />
+    <form className="p-4 border border-gray-800 border-t-0" action={addTweet}>
+      <div className="flex gap-4">
+        <div className="rounded-full bg-red-400 ">
+          <Image
+            src={user.user_metadata.avatar_url}
+            alt={`user avatar`}
+            width={48}
+            height={48}
+            className="rounded-full"
+          />
+        </div>
+        <input
+          name="title"
+          className="bg-inherit flex-1 px-2"
+          placeholder="What's up?"
+        />
+      </div>
     </form>
   );
 }
