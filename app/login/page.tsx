@@ -14,5 +14,12 @@ export default async function Login() {
     redirect("/");
   }
 
-  return <AuthButtonClient session={session} />;
+  return (
+    <div className="w-full max-w-xl mx-auto">
+      <div className="flex justify-between items-center p-4 border border-gray-800 border-t-0">
+        <h1>Home</h1>
+        <AuthButtonClient session={session} />
+      </div>
+    </div>
+  );
 }
