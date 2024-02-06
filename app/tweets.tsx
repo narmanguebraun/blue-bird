@@ -53,7 +53,6 @@ export default function Tweets({ tweets }: { tweets: TweetWithAuthor[] }) {
         </div>
         <p className="mb-3">{tweet.title}</p>
         <Likes tweet={tweet} addOptimisticTweet={addOptimisticTweet} />
-        <pre>{JSON.stringify(tweets, null, 2)}</pre>
       </div>
     </div>
   ));
